@@ -30,7 +30,7 @@ int main()
     ievads(mas, n);
     
     
-    cout<"----------------";
+    cout<<"----------------";
     cout<<endl<<endl;
     return 0;
 }
