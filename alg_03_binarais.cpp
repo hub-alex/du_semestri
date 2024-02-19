@@ -9,25 +9,23 @@ using namespace std;
 
 void ievads(int mas[], int n){
 int i;    
-cout<<"\nMas'iva ievads: ";
+cout<<endl<<"Masīva ievads: ";
 for (i=0;i<n;i++) {
 cout<<"mas["<<i<<"]=";
-cin>>mas[i];}
+cin>>mas[i];
+}
     }
-
-//-------------    
-
-
+//----------------------------------    
 
 void izvads(int mas[], int n){
 int i;
-cout<<"\nMas'iva izvads: ";
+cout<<endl<<"Masīva izvads: ";
 for (i=0;i<n;i++) cout<<mas[i]<<" ";
     }
 
-//-------------    
+//--------------------------------    
 
-//
+
 void binarais(int mas[], int n, int x){
 int i, kreisa=0, laba=n-1;
 
@@ -37,23 +35,21 @@ int i, kreisa=0, laba=n-1;
         }
 cout<<endl<<endl;
 if (mas[i]==x)
-    cout<<"\nAtrada!";
+    cout<<endl<<"Atrada!";
 else
-    cout<<"\nNeatrada!";
+    cout<<endl<<"Neatrada!";
 
 }
 
 
-
-//----------------
+//-------------------------
 int main(){
 int mas[N];
 int n, x, alg;
 char atbilde;
-cout<<"Mas'iva izm'ers: "; cin>>n;
+cout<<"Masīva izmērs: "; cin>>n;
 ievads(mas, n);
-cout<<"\nMeklejamais cipars: "; cin>>x;
-
+cout<<endl<<"Meklejamais cipars: "; cin>>x;
 
 izvads(mas, n);
 binarais(mas, n, x);
