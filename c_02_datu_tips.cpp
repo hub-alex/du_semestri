@@ -37,9 +37,10 @@ void izvads(car &car1){
 
 
 int main(){
-    car car1;
-    ievads(car1);
-    izvads(car1);
+
+   car car1, car2;
+   ievads(car1); ievads(car2);
+   izvads(car1); izvads(car2);
     
     //ievads1(&car1);
 
