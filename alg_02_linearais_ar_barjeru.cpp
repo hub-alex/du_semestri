@@ -49,11 +49,10 @@ int main() {
 
     int result = linearais_ar_barjeru(mas, n + 1, key); // Используем n+1, так как добавляем барьер
         if (result != -1) {
+            cout << "----------------" << endl << endl;
             cout << "Atradam elementu pēc indeksa: " << result << endl;
         } else {
             cout << "Neatradam masivā ciparu" << endl;
         }
-
-        cout << "----------------" << endl << endl;
         return 0;
 }
