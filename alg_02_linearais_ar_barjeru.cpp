@@ -28,9 +28,9 @@ int linearais_ar_barjeru(int mas[], int n, int key) {
     mas[n - 1] = pedejais; // Восстановление последнего элемента
 
     if (i < n - 1 || mas[n - 1] == key) {
-        return i; // Элемент найден
+        return i; 
     } else {
-        return -1; // Элемент не найден
+        return -1;
     }
 }
 

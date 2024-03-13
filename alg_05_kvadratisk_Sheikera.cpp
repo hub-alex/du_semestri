@@ -97,7 +97,8 @@ for (k = 0; k < n/2 && apmaina == 1; k++)
         izvads(mas, n);   
         }
         } //i
-    
+
+    //no labas uz kreiso  
     for(j=n-1-k; j>k; j--){
     if (mas[j-1]>mas[j])
     {z = mas[j-1]; //5
@@ -108,7 +109,7 @@ for (k = 0; k < n/2 && apmaina == 1; k++)
     }
     }// j
 
-} //no labas uz kreiso   
+}  
 }
 
 //-------------------------
