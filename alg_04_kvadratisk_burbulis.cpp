@@ -38,11 +38,12 @@ for (i = 1; i < n && apmaina == 1; i++)
         mas[j+1]=mas[j];
         mas[j]=z;
         apmaina = 1;
-        izvads(mas, n);   
+          
         }
         }
-//izvads(mas, n);    
+    izvads(mas, n); 
 }
+
 }
 
 
@@ -53,10 +54,7 @@ int n;
 cout<<"Masīva izmērs: "; cin>>n;
 ievads(mas, n);
 burbulits(mas, n);
-
-
-
-
+izvads(mas, n); 
 system("pause>nul");
 return 0;
 }
