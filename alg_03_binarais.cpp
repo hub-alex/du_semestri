@@ -35,7 +35,7 @@ int i, kreisa=0, laba=n-1;
         }
 cout<<endl<<endl;
 if (mas[i]==x)
-    cout<<endl<<"Atrada!";
+    cout<<endl<<"Atrada pēc indeksa: "<<i;
 else
     cout<<endl<<"Neatrada!";
 
