@@ -63,6 +63,6 @@ int main(){
     cout<<endl<<"----------------"<<endl;
     izvads(mas, n);
 
-    //system("pause>nul");
+    system("pause>nul");
     return 0;
 }
