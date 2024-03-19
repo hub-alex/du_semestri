@@ -48,7 +48,7 @@ int lasit_failu() {
     if (!fin) {
         cout << "Faila atversanas kluda\n";
         cin.get();  // Izpildes apturēšana
-        return -1;  // Kļūdas atgriešana, ja failu neizdodas atvērt
+        return -1;
     }
 
     int i = 0;
@@ -67,7 +67,7 @@ void izvadit_informaciju(int n_record) {
         return;
     }
 
-    cout << "Informācija par pilsētām:\n";
+    cout << endl<<"Informācija par pilsētām:\n";
     for (int i = 0; i < n_record; i++) {
         cout << "Pilsēta: " << Latvija[i].pilseta << "\n";
         cout << "Gads: " << Latvija[i].year << " g.\n";
@@ -114,14 +114,14 @@ int save_bin() {
     if (!fin) {
         cout << "Faila atversanas kluda\n";
         system("Pause>nul");
-        return 1; // Kļūdas atgriešana
+        return 1;
     }
 
-    ofstream fout("dbase.bin", ios::binary); // Binārā faila atvēršana rakstīšanai
+    ofstream fout("dbase.bin", ios::binary);
     if (!fout) {
         cout << "Faila atversanas kluda\n";
         system("Pause>nul");
-        return 1; // Kļūdas atgriešana
+        return 1;
     }
 
     int i = 0;
@@ -132,8 +132,8 @@ int save_bin() {
         i++;
     }
 
-    fin.close(); // Teksta faila aizvēršana
-    fout.close(); // Binārā faila aizvēršana
+    fin.close(); 
+    fout.close();
     cout << "Binārais fails ierakstīts\n";
 
     return 0;
@@ -152,7 +152,7 @@ int read_from_bin(){
     int i = 0;
     // Dati no binārā faila ierakstīti struktūru masīvā db2
     while (fin.read((char *)&db2[i], sizeof(db2[i]))) { // Cikla nosacījums pārbauda lasīšanas veiksmi
-        // Nolasīto datu izvade
+
         cout << "Pilsēta: "<< db2[i].pilseta<<endl;
         cout << "Iedzīvotāju skaits: " << db2[i].iedzivotajuSkaits << " cilv. \n";
         cout << "Gads: " << db2[i].year << " g.\n";
@@ -170,42 +170,54 @@ int read_from_bin(){
 
 int main() {
     int action;
-    cout << "Izvēlieties darbību:\n";
-    cout << "0 - Pievienot jaunu ierakstu tekstā failā\n";
-    cout << "1 - Izvadīt informāciju no teksta faila\n";
-    cout << "2 - Uzzināt vidējo iedzīvotāju skaitu pilsētā\n";
-    cout << "3 - Lasīt datus no binārā faila\n";
-    cout << "4 - Saglabāt datus binārā failā\n";
-    cout << "Ievadiet izvēles numuru: ";
-    cin >> action;
+    char buf[10];
 
-    int n_record = 0;
+    cout << "\nIzvēlieties darbību: vai \"end\", lai beigtu: \n";
+    
+    while (true) {
+        cout << "0 - Pievienot jaunu ierakstu tekstā failā\n";
+        cout << "1 - Izvadīt informāciju no teksta faila\n";
+        cout << "2 - Uzzināt vidējo iedzīvotāju skaitu pilsētā\n";
+        cout << "3 - Lasīt datus no binārā faila\n";
+        cout << "4 - Saglabāt datus binārā failā\n";
+        cout << "Ievadiet izvēles numuru: ";
+        cin >> buf;
+        if (strcmp(buf, "end") == 0) break;
+    
 
-    switch (action) {
-        case 0:
-            ievads();
-            break;
-        case 1:
-            n_record = lasit_failu();
-            izvadit_informaciju(n_record);
-            break;
-        case 2:
-            n_record = lasit_failu();
-            get_avarage(n_record);
-            break;
-        case 3:
-            read_from_bin();
-            break;
-        case 4:
-            n_record = lasit_failu(); 
-            if (n_record > 0) {
-                save_bin();
-            }
-            break;
-        default:
-            cout << "Nepareiza izvēle. Lūdzu, ievadiet numuru no 0 līdz 4.\n";
-            break;
+        action = stoi(buf);
+
+        int n_record = 0;
+
+
+
+        switch (action) {
+            case 0:
+                ievads();
+                break;
+            case 1:
+                n_record = lasit_failu();
+                izvadit_informaciju(n_record);
+                break;
+            case 2:
+                n_record = lasit_failu();
+                get_avarage(n_record);
+                break;
+            case 3:
+                read_from_bin();
+                break;
+            case 4:
+                n_record = lasit_failu(); 
+                if (n_record > 0) {
+                    save_bin();
+                }
+                break;
+            default:
+                cout << "Nepareiza izvēle. Lūdzu, ievadiet numuru no 0 līdz 4.\n";
+                break;
+        }
+        cout << "\nIzvēlieties darbību: vai \"end\", lai beigtu: \n";
+        
     }
-
     return 0;
 }
