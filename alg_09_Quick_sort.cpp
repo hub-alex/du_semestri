@@ -26,42 +26,32 @@ for (i=0;i<n;i++) cout<<mas[i]<<" ";
 
 //--------------------------------    
 
-void Shell_alg(int n, int mas[]){
-int i, j, k, solis, z;
-
+void quick_sort(int n, int mas[], int kreisa, int laba){
+int i, j, vid, z;
+bool apmaina=true;
 izvads(mas, n);
-for(solis=1; solis<=n/2-solis; solis=solis*2);
-for (solis=solis; solis>=1; solis=solis/2){
+vid=(laba+kreisa)/2;
+cout<<endl<<"vid="<<mas[vid];
 
-    cout<<"\n solis="<<solis<<endl;
-
-
-for(i=0; i<solis; i++){
-
-for (j=i; j<n-solis; j=j+solis)//kr. uz labo
-{
-    if(mas[j+solis]<mas[j]) //apmaiņa
-    {
-        z=mas[j+solis];
-        mas[j+solis]=mas[j];
-        mas[j]=z;
+while(apmaina==true){
+    apmaina=false;
+    for(i=kreisa; i<=vid && mas[i]<=mas[vid]; i++);
+    for(j=laba; j>=vid && mas[j]>=mas[vid]; j--);
+    
+    cout<<endl<<"kreisa: "<<mas[i];
+    cout<<endl<<"laba: "<<mas[j];
+        
+        if (i!=j){
+            z=mas[i];
+            mas[i]=mas[j];
+            mas[j]=z;
+            apmaina=true;
+        }
+        
         izvads(mas, n);
+}
 
-        for(k=j; k>=solis; k=k-solis){//uz kr.
-            if (mas[k]<mas[k-solis])
-            {
-                z=mas[k];
-                mas[k]=mas[k-solis];
-                mas[k-solis]=z;
-            }//if
-        izvads(mas, n);    
-        }//k
 
-    }//if
-    izvads(mas, n);
-}//j
-}//i
-}//solis
 }
 
 //--------------------------------    
@@ -74,11 +64,11 @@ int main(){
 
     srand(time(NULL));
     cout<<"Masīva izmērs: ";cin>>n;
-    cout<<"Shella algoritms";
+    cout<<"Quick Sort algoritms";
 
     
     ievads_gen(mas, n);
-    Shell_alg(n, mas);
+    quick_sort(n, mas, 0, n-1);
 
     cout<<endl<<"----------------"<<endl;
     izvads(mas, n);
