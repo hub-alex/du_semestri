@@ -29,14 +29,16 @@ for (i=0;i<n;i++) cout<<mas[i]<<" ";
 void quick_sort(int n, int mas[], int kreisa, int laba){
 int i, j, vid, z;
 bool apmaina=true;
+if (kreisa>=laba) return;
+
 izvads(mas, n);
 vid=(laba+kreisa)/2;
 cout<<endl<<"vid="<<mas[vid];
 
 while(apmaina==true){
     apmaina=false;
-    for(i=kreisa; i<=vid && mas[i]<=mas[vid]; i++);
-    for(j=laba; j>=vid && mas[j]>=mas[vid]; j--);
+    for(i=kreisa; i<vid && mas[i]<=mas[vid]; i++);
+    for(j=laba; j>vid && mas[j]>=mas[vid]; j--);
     
     cout<<endl<<"kreisa: "<<mas[i];
     cout<<endl<<"laba: "<<mas[j];
@@ -49,9 +51,9 @@ while(apmaina==true){
         }
         
         izvads(mas, n);
-}
-
-
+}//while i<j
+quick_sort(n, mas, kreisa, vid-1);
+quick_sort(n, mas, vid+1, laba);
 }
 
 //--------------------------------    
@@ -69,7 +71,7 @@ int main(){
     
     ievads_gen(mas, n);
     quick_sort(n, mas, 0, n-1);
-
+    
     cout<<endl<<"----------------"<<endl;
     izvads(mas, n);
 
