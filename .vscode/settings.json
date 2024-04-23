@@ -46,7 +46,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "c_01_inherit_car": "c"
     },
     "CodeGPT.apiKey": "Cohere",
     "liveServer.settings.port": 5501
