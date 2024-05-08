@@ -100,11 +100,11 @@ int PublicBuilding::get_phoneNumber(){return phoneNumber;}
 
 
 class AppartmentHouse : public Building {
-private:
+    private:
     int apartments;
     int floors; // количество этажей
 
-public:
+    public:
     AppartmentHouse() {}
     AppartmentHouse(string street, int year, int aparts, int flrs) : Building(street, year), apartments(aparts), floors(flrs) {}
 
@@ -156,166 +156,57 @@ int main()
 
 
 /*
-// Базовый класс "Здание"
-class Building {
-public:
-Building(const std::string& address, int yearBuilt)
-: address(address), yearBuilt(yearBuilt) {}
+// Ваши классы и их методы
 
+// Функция для записи информации о зданиях в файл
+void writeBuildingInfoToFile(const string& filename, PrivateHouse& house, Hotel& hotel, PublicBuilding& building, AppartmentHouse& appartmentHouse) {
+    // Открываем файл для записи
+    ofstream outputFile(filename);
 
-virtual void displayInfo() const {
-    std::cout << "Адрес: " << address << std::endl;
-    std::cout << "Год постройки: " << yearBuilt << std::endl;
-}
+    // Проверяем, успешно ли открыт файл
+    if (outputFile.is_open()) {
+        // Записываем информацию о каждом объекте в файл
+        outputFile << "Prīvatmāja informācija:" << endl;
+        outputFile << "Adrese: " << house.get_address() << endl;
+        outputFile << "Būvniecības gads: " << house.get_year() << endl;
+        outputFile << "Mājas platība: " << house.get_area() << " m²" << endl << endl;
 
-virtual void saveToFile(const std::string& filename) const {
-    std::ofstream outfile(filename, std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "Базовое здание: " << address << ", " << yearBuilt << std::endl;
-        outfile.close();
+        outputFile << "Viesnīcas informācija:" << endl;
+        outputFile << "Nosaukums: " << hotel.get_hotelName() << endl;
+        outputFile << "Adrese: " << hotel.get_address() << endl;
+        outputFile << "Būvniecības gads: " << hotel.get_year() << endl;
+        outputFile << "Numuru skaits: " << hotel.get_roomCount() << endl;
+        outputFile << "Zvaigžņu skaits: " << hotel.get_stars() << endl << endl;
+
+        outputFile << "Sabiedriskā ēka informācija:" << endl;
+        outputFile << "Adrese: " << building.get_address() << endl;
+        outputFile << "Būvniecības gads: " << building.get_year() << endl;
+        outputFile << "Nolūks: " << building.get_purpose() << endl;
+        outputFile << "Telefona numurs: " << building.get_phoneNumber() << endl << endl;
+
+        outputFile << "Daudzdzīvokļu mājas informācija:" << endl;
+        outputFile << "Adrese: " << appartmentHouse.get_address() << endl;
+        outputFile << "Būvniecības gads: " << appartmentHouse.get_year() << endl;
+        outputFile << "Dzīvokļu skaits: " << appartmentHouse.get_apartments() << endl;
+        outputFile << "Stāvu skaits: " << appartmentHouse.get_floors() << endl;
+        
+        // Закрываем файл
+        outputFile.close();
+        cout << "Informācija ir ierakstīta failā " << filename << endl;
     } else {
-        std::cout << "Ошибка открытия файла для записи." << std::endl;
+        cout << "Nevarēja atvērt failu " << filename << "!" << endl;
     }
 }
-
-protected:
-std::string address;
-int yearBuilt;
-};
-
-
-// Подкласс "Частный дом"
-class PrivateHouse : public Building {
-public:
-PrivateHouse(const std::string& address, int yearBuilt, int numBedrooms)
-: Building(address, yearBuilt), numBedrooms(numBedrooms) {}
-
-
-void displayInfo() const override {
-    Building::displayInfo();
-    std::cout << "Количество спален: " << numBedrooms << std::endl;
-}
-
-void saveToFile(const std::string& filename) const override {
-    Building::saveToFile(filename);
-    std::ofstream outfile(filename, std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "Частный дом: " << numBedrooms << " спален" << std::endl;
-        outfile.close();
-    } else {
-        std::cout << "Ошибка открытия файла для записи." << std::endl;
-    }
-}
-
-private:
-int numBedrooms;
-};
-
-
-// Подкласс "Публичное здание"
-class PublicBuilding : public Building {
-public:
-PublicBuilding(const std::string& address, int yearBuilt, const std::string& type)
-: Building(address, yearBuilt), type(type) {}
-
-
-void displayInfo() const override {
-    Building::displayInfo();
-    std::cout << "Тип публичного здания: " << type << std::endl;
-}
-
-void saveToFile(const std::string& filename) const override {
-    Building::saveToFile(filename);
-    std::ofstream outfile(filename, std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "Публичное здание: " << type << std::endl;
-        outfile.close();
-    } else {
-        std::cout << "Ошибка открытия файла для записи." << std::endl;
-    }
-}
-
-private:
-std::string type;
-};
-
-
-// Подкласс "Многоквартирный дом"
-class ApartmentBuilding : public Building {
-public:
-ApartmentBuilding(const std::string& address, int yearBuilt, int numApartments)
-: Building(address, yearBuilt), numApartments(numApartments) {}
-
-
-void displayInfo() const override {
-    Building::displayInfo();
-    std::cout << "Количество квартир: " << numApartments << std::endl;
-}
-
-void saveToFile(const std::string& filename) const override {
-    Building::saveToFile(filename);
-    std::ofstream outfile(filename, std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "Многоквартирный дом: " << numApartments << " квартир" << std::endl;
-        outfile.close();
-    } else {
-        std::cout << "Ошибка открытия файла для записи." << std::endl;
-    }
-}
-
-private:
-int numApartments;
-};
-
-
-// Подкласс "Гостиница"
-class Hotel : public Building {
-public:
-Hotel(const std::string& address, int yearBuilt, int numRooms)
-: Building(address, yearBuilt), numRooms(numRooms) {}
-
-
-void displayInfo() const override {
-    Building::displayInfo();
-    std::cout << "Количество номеров: " << numRooms << std::endl;
-}
-
-void saveToFile(const std::string& filename) const override {
-    Building::saveToFile(filename);
-    std::ofstream outfile(filename, std::ios::app);
-    if (outfile.is_open()) {
-        outfile << "Гостиница: " << numRooms << " номеров" << std::endl;
-        outfile.close();
-    } else {
-        std::cout << "Ошибка открытия файла для записи." << std::endl;
-    }
-}
-
-private:
-int numRooms;
-};
-
 
 int main() {
-PrivateHouse house("Улица Солнечная, 123", 2005, 3);
-PublicBuilding publicBuilding("Центральная площадь, 5", 1980, "Музей");
-ApartmentBuilding apartmentBuilding("Проспект Мира, 42", 2018, 50);
-Hotel hotel("Набережная, 7", 2021, 200);
+    PrivateHouse pushkina238("Puškina iela 238, Daugavpils", 2005, 136.4);
+    Hotel latgola("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel Latgola", 117, 3);
+    PublicBuilding DKP("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
+    AppartmentHouse vienibas8("Vienības iela 20, Daugavpils", 1965, 24, 3);
 
+    // Вызываем функцию для записи информации в файл
+    writeBuildingInfoToFile("building_info.txt", pushkina238, latgola, DKP, vienibas8);
 
-house.displayInfo();
-house.saveToFile("buildings.txt");
-
-publicBuilding.displayInfo();
-publicBuilding.saveToFile("buildings.txt");
-
-apartmentBuilding.displayInfo();
-apartmentBuilding.saveToFile("buildings.txt");
-
-hotel.displayInfo();
-hotel.saveToFile("buildings.txt");
-
-return 0;
-
+    return 0;
 }
 */
