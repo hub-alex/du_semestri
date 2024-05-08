@@ -11,17 +11,17 @@ class Building {
     string address;
     int yearBuilt;
 
-public:
+    public:
     void set_address (string name);
-    void set_yearBuilt (int x);
+    void set_yearBuilt (int year);
     string get_address();
     int get_year();
 };
 
-    void Building::set_address (string name){address = name;}
-    void Building::set_yearBuilt (int x){ yearBuilt = x;}
-    string Building::get_address(){return address;}
-    int Building::get_year(){return yearBuilt;}
+void Building::set_address (string name){address = name;}
+void Building::set_yearBuilt (int year){ yearBuilt = year;}
+string Building::get_address(){return address;}
+int Building::get_year(){return yearBuilt;}
 
 class PrivateHouse : public Building {
     private:
@@ -33,10 +33,46 @@ class PrivateHouse : public Building {
 };
 
 void PrivateHouse::set_area(double squareMeters){
-    cout << "Jūsu Mājas platība" << endl;
-    area = squareMeters;}
+    cout << "Jūsu mājas platība: " << squareMeters << " m²" << endl;
+    area = squareMeters;
+    }
 double PrivateHouse::get_area(){ return area;}
 
+
+class Hotel : public Building{
+    private:
+    int rooms;
+    int stars;
+    public:
+    void setRoomCount(int room_numbers);
+    void set_stars(int star_numbers);
+    int getRoomCount();
+    int get_stars();
+
+};
+
+void Hotel::setRoomCount(int room_numbers){ rooms = room_numbers;}
+void Hotel::set_stars(int star_numbers){ stars = star_numbers;}
+int Hotel::getRoomCount() {return rooms;}
+int Hotel::get_stars() {return stars;}
+
+
+
+class PublicBuilding : public Building{
+    private:
+    string purpose;
+    int phoneNumber;
+    public:
+    void set_purpose(string name);
+    void set_phoneNumber(int numbers);
+    string get_purpose();
+    int get_phoneNumber();
+};
+
+void PublicBuilding::set_purpose(string name){purpose = name;}
+void PublicBuilding::set_phoneNumber(int numbers){phoneNumber = numbers;}
+string PublicBuilding::get_purpose(){return purpose;}
+int PublicBuilding::get_phoneNumber(){return phoneNumber;}
 
 
 int main()
