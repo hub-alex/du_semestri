@@ -8,17 +8,23 @@
 using namespace std;
 
 class Building {
+    private:
     string address;
     int yearBuilt;
 
     public:
-    void set_address (string name);
+    Building() {} // Konstruktors
+
+    Building(string street, int year) : address(street), yearBuilt(year) {} // mans konstruktors
+
+    
+    void set_address (string street);
     void set_yearBuilt (int year);
     string get_address();
     int get_year();
 };
 
-void Building::set_address (string name){address = name;}
+void Building::set_address (string street){address = street;}
 void Building::set_yearBuilt (int year){ yearBuilt = year;}
 string Building::get_address(){return address;}
 int Building::get_year(){return yearBuilt;}
@@ -28,41 +34,59 @@ class PrivateHouse : public Building {
     double area;
     
     public:
-    void set_area(double squareMeters);
+    PrivateHouse(){}
+    PrivateHouse(string street, int year, double sqMeters) : Building(street, year), area(sqMeters){}
+
+    void set_area(double sqMeters);
     double get_area();
 };
 
-void PrivateHouse::set_area(double squareMeters){
-    cout << "Jūsu mājas platība: " << squareMeters << " m²" << endl;
-    area = squareMeters;
+
+void PrivateHouse::set_area(double sqMeters){
+    cout << "Jūsu mājas platība: " << sqMeters << " m²" << endl;
+    area = sqMeters;
     }
 double PrivateHouse::get_area(){ return area;}
 
 
 class Hotel : public Building{
     private:
-    int rooms;
+    int roomCount;
     int stars;
+    string hotelName;
     public:
-    void setRoomCount(int room_numbers);
+    
+    Hotel(){}
+    Hotel (string street, int year, string name, int room_numbers, int star_numbers) : Building(street, year), 
+    hotelName(name), roomCount(room_numbers), stars(star_numbers){}
+
+
+    void set_roomCount(int room_numbers);
     void set_stars(int star_numbers);
-    int getRoomCount();
+    void set_hotelName(string name);
+    int get_roomCount();
     int get_stars();
+    string get_hotelName();
 
 };
 
-void Hotel::setRoomCount(int room_numbers){ rooms = room_numbers;}
+void Hotel::set_roomCount(int room_numbers){ roomCount = room_numbers;}
 void Hotel::set_stars(int star_numbers){ stars = star_numbers;}
-int Hotel::getRoomCount() {return rooms;}
+void Hotel::set_hotelName(string name){ hotelName = name;}
+int Hotel::get_roomCount() {return roomCount;}
 int Hotel::get_stars() {return stars;}
-
+string Hotel::get_hotelName(){return hotelName;}
 
 
 class PublicBuilding : public Building{
     private:
     string purpose;
     int phoneNumber;
+
     public:
+    PublicBuilding(){}
+    PublicBuilding(string street, int year, string name, int numbers):Building(street, year), purpose(name), phoneNumber(numbers){}
+    
     void set_purpose(string name);
     void set_phoneNumber(int numbers);
     string get_purpose();
@@ -77,21 +101,28 @@ int PublicBuilding::get_phoneNumber(){return phoneNumber;}
 
 int main()
 {
-    int x;
-    /*
-    truck truck1;
-    car car1;
-    printf("Input truck weight (kg): "); cin>>x; truck1.set_weight_kg(x);
-    printf("Input truck speed (km/h): "); cin>>x; truck1.set_speed(x);
-    printf("Input car passenger count: "); cin>>x; car1.set_passenger_count(x);
-    printf("Input car speed (kg): "); cin>>x; car1.set_speed(x);
-    cout<<endl;
-    //get
-    printf("Truck weight (kg): %i", truck1.get_weight_kg()); 
-    printf("Truck truck speed (km/h): %i", truck1.get_speed()); 
-    printf("Truck car passenger count: %i", car1.get_passenger_count()); 
-    printf("Truck car speed (kg): %i", car1.get_speed()); 
-    */
+    PrivateHouse maja1("Puškina iela 238, Daugavpils", 2005, 136.4);
+    cout << "Prīvatmāja atrodas pēc adreses: " << maja1.get_address() << endl;
+    cout << "Būvniecības gads: " << maja1.get_year() << endl;
+    cout << "Mājas platība: " << maja1.get_area() << " m²" << endl;
+
+
+    Hotel latgola("Ģimnāzijas iela 46, Daugavpils, LV-5401", 1990, "Hotel Latgola", 125, 3);
+    cout << "\nMana viesnīca atrodas adresē: " << latgola.get_address() << endl;
+    cout << "Būvniecības gads: " << latgola.get_year() << endl;
+    cout << "Viesnīvas nosaukums: " << latgola.get_hotelName() << endl;
+    cout << "Numuru skaits: " << latgola.get_roomCount() << endl;
+    cout << "Zvaigžņu skaits: " << latgola.get_stars() << endl;
+
+
+    PublicBuilding DKP("Smilšu iela 127, Daugavpils", 1971, "Daugavpils Kultūras pils", 65437892);
+    cout << "\nSabiedriskā ēka atrodas pēs adreses: " << DKP.get_address() << endl;
+    cout << "Būvniecības gads: " << DKP.get_year() << endl;
+    cout << "Mērķis: " << DKP.get_purpose() << endl;
+    cout << "Tālrunis: " << DKP.get_phoneNumber() << endl;
+
+
+   //system("Pause>>null");
 	return 0;
 }
 
