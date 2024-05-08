@@ -99,27 +99,54 @@ string PublicBuilding::get_purpose(){return purpose;}
 int PublicBuilding::get_phoneNumber(){return phoneNumber;}
 
 
+class AppartmentHouse : public Building {
+private:
+    int apartments;
+    int floors; // количество этажей
+
+public:
+    AppartmentHouse() {}
+    AppartmentHouse(string street, int year, int aparts, int flrs) : Building(street, year), apartments(aparts), floors(flrs) {}
+
+    void set_apartments(int aparts);
+    void set_floors(int flrs);
+    int get_apartments();
+    int get_floors();
+};
+
+void AppartmentHouse::set_apartments(int aparts) { apartments = aparts; }
+void AppartmentHouse::set_floors(int flrs) { floors = flrs; }
+int AppartmentHouse::get_apartments() { return apartments; }
+int AppartmentHouse::get_floors() { return floors; }
+
+
 int main()
 {
-    PrivateHouse maja1("Puškina iela 238, Daugavpils", 2005, 136.4);
-    cout << "Prīvatmāja atrodas pēc adreses: " << maja1.get_address() << endl;
-    cout << "Būvniecības gads: " << maja1.get_year() << endl;
-    cout << "Mājas platība: " << maja1.get_area() << " m²" << endl;
+    PrivateHouse pushkina238("Puškina iela 238, Daugavpils", 2005, 136.4);
+    cout << "Prīvatmāja atrodas pēc adreses: " << pushkina238.get_address() << endl;
+    cout << "Būvniecības gads: " << pushkina238.get_year() << ". gads"<< endl;
+    cout << "Mājas platība: " << pushkina238.get_area() << " m²" << endl;
 
 
-    Hotel latgola("Ģimnāzijas iela 46, Daugavpils, LV-5401", 1990, "Hotel Latgola", 125, 3);
-    cout << "\nMana viesnīca atrodas adresē: " << latgola.get_address() << endl;
-    cout << "Būvniecības gads: " << latgola.get_year() << endl;
-    cout << "Viesnīvas nosaukums: " << latgola.get_hotelName() << endl;
+    Hotel latgola("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel Latgola", 117, 3);
+    cout << endl << "Viesnīcas nosaukums: " << latgola.get_hotelName() << endl;
+    cout << latgola.get_hotelName() <<" atrodas pēc adreses: " << latgola.get_address() << endl;
+    cout << "Būvniecības gads: " << latgola.get_year() << ". gads" << endl;
     cout << "Numuru skaits: " << latgola.get_roomCount() << endl;
     cout << "Zvaigžņu skaits: " << latgola.get_stars() << endl;
 
 
-    PublicBuilding DKP("Smilšu iela 127, Daugavpils", 1971, "Daugavpils Kultūras pils", 65437892);
+    PublicBuilding DKP("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
     cout << "\nSabiedriskā ēka atrodas pēs adreses: " << DKP.get_address() << endl;
-    cout << "Būvniecības gads: " << DKP.get_year() << endl;
-    cout << "Mērķis: " << DKP.get_purpose() << endl;
+    cout << "Būvniecības gads: " << DKP.get_year() << ". gads" << endl;
+    cout << "Sabiedriska ēka: " << DKP.get_purpose() << endl;
     cout << "Tālrunis: " << DKP.get_phoneNumber() << endl;
+
+    AppartmentHouse vienibas8("Vienības iela 20, Daugavpils", 1965, 24, 3);
+    cout << endl << "Daudzdzīvokļu mājas adrese: " << vienibas8.get_address() << endl;
+    cout << "Būvniecības gads: " << vienibas8.get_year() << ". gads" << endl;
+    cout << "Dzīvokļu skaits: " << vienibas8.get_apartments() << endl;
+    cout << "Stāvu skaits: " << vienibas8.get_floors() << endl;
 
 
    //system("Pause>>null");
