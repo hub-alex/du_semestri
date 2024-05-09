@@ -52,3 +52,8 @@ system("pause>nul");
 return 0;
 }
 
+
+/*Boyer Moore algoritms
+• Robert S. Boyer, J. Strother Moore 1977.
+• Paraugs tiek bīdīts gar tekstu no kreisās uz labo pusi.
+• Taču simbolu salīdzināšana notiek no labās uz kreiso pusi.*/
