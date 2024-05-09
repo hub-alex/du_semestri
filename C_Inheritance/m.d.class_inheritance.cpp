@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -120,8 +121,65 @@ int AppartmentHouse::get_apartments() { return apartments; }
 int AppartmentHouse::get_floors() { return floors; }
 
 
+void writeToFile(const string& filename, PrivateHouse& house, Hotel& hotel, PublicBuilding& building, AppartmentHouse& appartmentHouse) {
+    ofstream outputFile;
+    outputFile.open(filename, ios_base::app);
+    
+    if (outputFile.is_open()) {
+        outputFile << endl << "Prīvatmāja informācija:" << endl;
+        outputFile << "Adrese: " << house.get_address() << endl;
+        outputFile << "Būvniecības gads: " << house.get_year() << endl;
+        outputFile << "Mājas platība: " << house.get_area() << " m²" << endl << endl;
+
+        outputFile << "Viesnīcas informācija:" << endl;
+        outputFile << "Nosaukums: " << hotel.get_hotelName() << endl;
+        outputFile << "Adrese: " << hotel.get_address() << endl;
+        outputFile << "Būvniecības gads: " << hotel.get_year() << endl;
+        outputFile << "Numuru skaits: " << hotel.get_roomCount() << endl;
+        outputFile << "Zvaigžņu skaits: " << hotel.get_stars() << endl << endl;
+
+        outputFile << "Sabiedriskā ēka informācija:" << endl;
+        outputFile << "Adrese: " << building.get_address() << endl;
+        outputFile << "Būvniecības gads: " << building.get_year() << endl;
+        outputFile << "Nolūks: " << building.get_purpose() << endl;
+        outputFile << "Telefona numurs: " << building.get_phoneNumber() << endl << endl;
+
+        outputFile << "Daudzdzīvokļu mājas informācija:" << endl;
+        outputFile << "Adrese: " << appartmentHouse.get_address() << endl;
+        outputFile << "Būvniecības gads: " << appartmentHouse.get_year() << endl;
+        outputFile << "Dzīvokļu skaits: " << appartmentHouse.get_apartments() << endl;
+        outputFile << "Stāvu skaits: " << appartmentHouse.get_floors() << endl;
+        
+        outputFile.close();
+        cout << "Informācija ir ierakstīta failā " << filename << endl;
+    } else {
+        cout << "Nevarēja atvērt failu " << filename << "!" << endl;
+    }
+}
+
+
+void readFromFile(const string& filename) {
+string line;
+    ifstream inputFile(filename);
+
+    if (inputFile.is_open()) {
+
+        while (getline(inputFile, line)) {
+            cout << line << endl;
+        }
+        inputFile.close();
+    } else {
+        cout << "Nevarēja atvērt failu: " << filename << endl;
+    }
+}
+
+
+
+
 int main()
 {
+    string filename = "building_info.txt";
+
     PrivateHouse pushkina238("Puškina iela 238, Daugavpils", 2005, 136.4);
     cout << "Prīvatmāja atrodas pēc adreses: " << pushkina238.get_address() << endl;
     cout << "Būvniecības gads: " << pushkina238.get_year() << ". gads"<< endl;
@@ -148,65 +206,8 @@ int main()
     cout << "Dzīvokļu skaits: " << vienibas8.get_apartments() << endl;
     cout << "Stāvu skaits: " << vienibas8.get_floors() << endl;
 
-
+    //writeToFile(filename, pushkina238, latgola, DKP, vienibas8);
+    readFromFile(filename);
    //system("Pause>>null");
 	return 0;
 }
-
-
-
-/*
-// Ваши классы и их методы
-
-// Функция для записи информации о зданиях в файл
-void writeBuildingInfoToFile(const string& filename, PrivateHouse& house, Hotel& hotel, PublicBuilding& building, AppartmentHouse& appartmentHouse) {
-    // Открываем файл для записи
-    ofstream outputFile(filename);
-
-    // Проверяем, успешно ли открыт файл
-    if (outputFile.is_open()) {
-        // Записываем информацию о каждом объекте в файл
-        outputFile << "Prīvatmāja informācija:" << endl;
-        outputFile << "Adrese: " << house.get_address() << endl;
-        outputFile << "Būvniecības gads: " << house.get_year() << endl;
-        outputFile << "Mājas platība: " << house.get_area() << " m²" << endl << endl;
-
-        outputFile << "Viesnīcas informācija:" << endl;
-        outputFile << "Nosaukums: " << hotel.get_hotelName() << endl;
-        outputFile << "Adrese: " << hotel.get_address() << endl;
-        outputFile << "Būvniecības gads: " << hotel.get_year() << endl;
-        outputFile << "Numuru skaits: " << hotel.get_roomCount() << endl;
-        outputFile << "Zvaigžņu skaits: " << hotel.get_stars() << endl << endl;
-
-        outputFile << "Sabiedriskā ēka informācija:" << endl;
-        outputFile << "Adrese: " << building.get_address() << endl;
-        outputFile << "Būvniecības gads: " << building.get_year() << endl;
-        outputFile << "Nolūks: " << building.get_purpose() << endl;
-        outputFile << "Telefona numurs: " << building.get_phoneNumber() << endl << endl;
-
-        outputFile << "Daudzdzīvokļu mājas informācija:" << endl;
-        outputFile << "Adrese: " << appartmentHouse.get_address() << endl;
-        outputFile << "Būvniecības gads: " << appartmentHouse.get_year() << endl;
-        outputFile << "Dzīvokļu skaits: " << appartmentHouse.get_apartments() << endl;
-        outputFile << "Stāvu skaits: " << appartmentHouse.get_floors() << endl;
-        
-        // Закрываем файл
-        outputFile.close();
-        cout << "Informācija ir ierakstīta failā " << filename << endl;
-    } else {
-        cout << "Nevarēja atvērt failu " << filename << "!" << endl;
-    }
-}
-
-int main() {
-    PrivateHouse pushkina238("Puškina iela 238, Daugavpils", 2005, 136.4);
-    Hotel latgola("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel Latgola", 117, 3);
-    PublicBuilding DKP("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
-    AppartmentHouse vienibas8("Vienības iela 20, Daugavpils", 1965, 24, 3);
-
-    // Вызываем функцию для записи информации в файл
-    writeBuildingInfoToFile("building_info.txt", pushkina238, latgola, DKP, vienibas8);
-
-    return 0;
-}
-*/
