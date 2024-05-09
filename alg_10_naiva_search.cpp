@@ -29,27 +29,20 @@ else cout<<"Neatrada!!";
 
 
 
-
-
 //----------------
 int main(){
 char teksts [N]= "Lorem Ipsum – tas ir teksta salikums, kuru izmanto poligrāfijā un maketēšanas darbos. Lorem Ipsum ir kļuvis par vispārpieņemtu teksta aizvietotāju...";
-
-
-
 char vards[N];
 char atbilde;
 
-//teksts = "zil bil gulal svistel Janis";
 cout<<"Teksta meklēšanas algoritmi"<<endl<<endl;
-/*cout<<"Ievadiet tekstu: "; 
-cin.getline(teksts, N);
-*/
+
 cout<<"Dotais teksts: "<<teksts<<endl;
 cout<<"Ievadiet meklējamo vārdu: ";
 cin.getline(vards, N);
 
 naiva_search(teksts, vards);
-//system("pause>nul");
+system("pause>nul");
 return 0;
 }
+

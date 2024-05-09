@@ -102,7 +102,7 @@ int PublicBuilding::get_phoneNumber(){return phoneNumber;}
 class AppartmentHouse : public Building {
     private:
     int apartments;
-    int floors; // количество этажей
+    int floors; 
 
     public:
     AppartmentHouse() {}
