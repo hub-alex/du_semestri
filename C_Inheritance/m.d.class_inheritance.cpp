@@ -180,9 +180,10 @@ PrivateHouse funcPrivatHouse(){
     double area;
     string adrese;
     //PrivateHouse house("Puškina iela 238, Daugavpils", 2005, 136.4);
-    cin.ignore();
     cout << "Prīvatmāja informācija:" << endl;
-    cout << "Adrese: ";  cin.ignore(); getline(cin, adrese);
+    cout << "Adrese: ";  
+    cin.ignore(); 
+    getline(cin, adrese);
     cout << "Būvniecības gads: "; cin.ignore(); cin >> year;
     cout << "Mājas platība: "; cin >> area;
     
@@ -290,13 +291,13 @@ int main()
 
 
 
-    //PrivateHouse house = funcPrivatHouse(); 
+    PrivateHouse house = funcPrivatHouse(); 
 
-    //Hotel hotel = funcHotel();
+    Hotel hotel = funcHotel();
 
-    //PublicBuilding publicB = funcPublicBuilding();
+    PublicBuilding publicB = funcPublicBuilding();
 
-    //AppartmentHouse appart = funcAppartmentHouse();
+    AppartmentHouse appart = funcAppartmentHouse();
 
     
     PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
@@ -304,8 +305,8 @@ int main()
     PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
     AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
     
-    writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
-    //makeChoice(filename, house, hotel, publicB, appart);
+    //writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
+    makeChoice(filename, house, hotel, publicB, appart);
     
 	return 0;
 }
