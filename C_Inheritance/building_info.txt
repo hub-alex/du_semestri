@@ -40,3 +40,7 @@ Adrese: Puškina iela 238, Daugavpils
 Būvniecības gads: 2005
 Mājas platība: 136.4 m²
 
+Prīvatmāja informācija:
+Adrese: oisd
+Būvniecības gads: 1982
+Mājas platība: 22.3
