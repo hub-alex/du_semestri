@@ -235,7 +235,7 @@ void makeChoice(const string& filename) {
         
         
         cin >> choice; cout << endl;
-        //cin.ignore();
+        cin.ignore();
 
         switch(choice) {
             case 1:
