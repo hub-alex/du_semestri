@@ -4,7 +4,7 @@
 #include <cstring>
 #include <string>
 #include <ctime>
-#define N 100
+//#define N 100
 
 using namespace std;
 
@@ -14,12 +14,7 @@ class Building {
     int yearBuilt;
 
     public:
-    Building() {
-        cout << "Bezsubklases ēka:" << endl;
-        cout << "Adrese: "; cin.ignore(); getline(cin, address);
-        cout << "Būvniecības gads: ";
-        cin >> yearBuilt;
-        }
+    Building() {}
 
     Building(string address, int year) : address(address), yearBuilt(year) {}
 
@@ -29,8 +24,9 @@ class Building {
     int get_year();
 
     virtual void writeData(ofstream& outputFile) const {
+        outputFile << "Bezsubklases ēka:" << endl;
         outputFile << "Adrese: " << address << endl;
-        outputFile << "Būvniecības gads: " << yearBuilt << endl;
+        outputFile << "Būvniecības gads: " << yearBuilt << endl << endl;
     }
 
 };
@@ -45,7 +41,6 @@ class PrivateHouse : public Building {
     double area;
     
     public:
-    //PrivateHouse(){}
     PrivateHouse(string address, int year, double sqMeters) : Building(address, year), area(sqMeters){}
 
     void set_area(double sqMeters);
@@ -53,13 +48,9 @@ class PrivateHouse : public Building {
 
     PrivateHouse() {
         cout << "Prīvatmāja informācija:" << endl;
-        cout << "Adrese: ";
-        cin.ignore();
-        getline(cin, address);
-        cout << "Būvniecības gads: ";
-        cin >> yearBuilt;
-        cout << "Mājas platība: ";
-        cin >> area;
+        cout << "Adrese: "; cin.ignore(); getline(cin, address);
+        cout << "Būvniecības gads: "; cin >> yearBuilt;
+        cout << "Mājas platība: "; cin >> area;
     }
 
 
@@ -67,7 +58,7 @@ class PrivateHouse : public Building {
         outputFile << "Prīvatmāja informācija:" << endl;
         outputFile << "Adrese: " << address << endl;
         outputFile << "Būvniecības gads: " << yearBuilt << endl;
-        outputFile << "Mājas platība: " << area << endl;
+        outputFile << "Mājas platība: " << area << endl << endl;
     }
 };
 
@@ -97,11 +88,11 @@ class Hotel : public Building{
 
     void writeData(ofstream& outputFile) const override {
         outputFile << "Viesnīcas informācija:" << endl;
-        outputFile << "Nosaukums: "<< hotelName;
-        outputFile << "Adrese: "<< address;
-        outputFile << "Būvniecības gads: " << yearBuilt;
-        outputFile << "Numuru skaits: " << roomCount;
-        outputFile << "Zvaigžņu skaits: " << stars;
+        outputFile << "Nosaukums: " << hotelName << endl;
+        outputFile << "Adrese: "<< address << endl;
+        outputFile << "Būvniecības gads: " << yearBuilt << endl;
+        outputFile << "Numuru skaits: " << roomCount << endl;
+        outputFile << "Zvaigžņu skaits: " << stars << endl << endl;
     }
 
     void set_roomCount(int room_numbers);
@@ -140,10 +131,10 @@ class PublicBuilding : public Building{
     
     void writeData(ofstream& outputFile) const override {
         outputFile << "Sabiedriskās ēkas informācija:" << endl;
-        outputFile << "Adrese: "<< address;
-        outputFile << "Būvniecības gads: " << yearBuilt;
-        outputFile << "Tipa veids: " << purpose;
-        outputFile << "Tālrunis: " << phoneNumber;
+        outputFile << "Adrese: " << address << endl;
+        outputFile << "Būvniecības gads: " << yearBuilt << endl;
+        outputFile << "Tipa veids: " << purpose << endl;
+        outputFile << "Tālrunis: " << phoneNumber << endl << endl;
     }
 
     void set_purpose(string name);
@@ -175,10 +166,10 @@ class AppartmentHouse : public Building {
     
     void writeData(ofstream& outputFile) const override {
         outputFile << "Daudzdzīvokļu mājas informācija:" << endl;
-        outputFile << "Adrese: "<< address;
-        outputFile << "Būvniecības gads: " << yearBuilt;
-        outputFile << "Dzīvokļu skaits: " << apartments;
-        outputFile << "Stāvu skaits: " << floors;
+        outputFile << "Adrese: "<< address << endl;
+        outputFile << "Būvniecības gads: " << yearBuilt << endl;
+        outputFile << "Dzīvokļu skaits: " << apartments << endl;
+        outputFile << "Stāvu skaits: " << floors << endl << endl;
         }
 
 
@@ -207,16 +198,20 @@ void writeToFile(const string& filename, const Building& building) {
 }
 
 
-
 void readFromFile(const string& filename) {
 string line;
     ifstream inputFile(filename);
 
     if (inputFile.is_open()) {
-
-        while (getline(inputFile, line)) {
+        cout << "---------------------" << endl << endl;
+        
+        while (getline(inputFile, line)) 
+        {
             cout << line << endl;
         }
+        
+        cout << "---------------------" << endl << endl;
+        
         inputFile.close();
     } else {
         cout << "Nevarēja atvērt failu: " << filename << endl;
@@ -236,11 +231,12 @@ void makeChoice(const string& filename) {
         cout << "4. Ierakstīt informāciju par publisko eku" << endl;
         cout << "5. Ierakstīt informāciju daudzdzīvokļu māju" << endl;
         cout << "6. Iziet no programmas" << endl;
-        cout << "Jūsu izvēle: ";
+        cout << "Jūsu izvēle:   ";
         
-        cin >> choice;
-        cin.ignore();
         
+        cin >> choice; cout << endl;
+        //cin.ignore();
+
         switch(choice) {
             case 1:
                 readFromFile(filename);
@@ -275,23 +271,26 @@ void makeChoice(const string& filename) {
     } while (choice != 6);
 }
 
-int main()
-{
-    string filename = "building_info.txt";
-
-
-
-    
+void automat(const string& filename){
     PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
     writeToFile(filename, objHouse);
 
-    //Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel objHotel", 117, 3);
-    //PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
-    //AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
+    Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel Latgola", 117, 3);
+    writeToFile(filename, objHotel);
     
-    //writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
-    //makeChoice(filename);
+    PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
+    writeToFile(filename, objPublic);
     
+    AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
+    writeToFile(filename, objAppart);
+    }
+
+int main()
+{
+    string filename = "building_info.txt";
+    makeChoice(filename);
+    //automat(filename);
+
 	return 0;
 }
 
