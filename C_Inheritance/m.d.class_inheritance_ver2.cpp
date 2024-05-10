@@ -14,7 +14,12 @@ class Building {
     int yearBuilt;
 
     public:
-    Building() {}
+    Building() {
+        cout << "Bezsubklases ēka:" << endl;
+        cout << "Adrese: "; cin.ignore(); getline(cin, address);
+        cout << "Būvniecības gads: ";
+        cin >> yearBuilt;
+        }
 
     Building(string address, int year) : address(address), yearBuilt(year) {}
 
@@ -78,10 +83,26 @@ class Hotel : public Building{
     string hotelName;
     public:
     
-    Hotel(){}
+    Hotel(){
+    cout << "Viesnīcas informācija:" << endl;
+    cout << "Nosaukums: "; cin.ignore(); getline(cin, hotelName);
+    cout << "Adrese: "; cin.ignore(); getline(cin, address);
+    cout << "Būvniecības gads: "; cin >> yearBuilt;
+    cout << "Numuru skaits: "; cin >> roomCount;
+    cout << "Zvaigžņu skaits: "; cin >> stars;
+    }
+
     Hotel (string street, int year, string name, int room_numbers, int star_numbers) : Building(street, year), 
     hotelName(name), roomCount(room_numbers), stars(star_numbers){}
 
+    void writeData(ofstream& outputFile) const override {
+        outputFile << "Viesnīcas informācija:" << endl;
+        outputFile << "Nosaukums: "<< hotelName;
+        outputFile << "Adrese: "<< address;
+        outputFile << "Būvniecības gads: " << yearBuilt;
+        outputFile << "Numuru skaits: " << roomCount;
+        outputFile << "Zvaigžņu skaits: " << stars;
+    }
 
     void set_roomCount(int room_numbers);
     void set_stars(int star_numbers);
@@ -106,9 +127,25 @@ class PublicBuilding : public Building{
     int phoneNumber;
 
     public:
-    PublicBuilding(){}
+    PublicBuilding()
+    {
+        cout << "Sabiedriskās ēkas informācija:" << endl;
+        cout << "Adrese: "; cin.ignore(); getline(cin, address);
+        cout << "Būvniecības gads: "; cin >> yearBuilt;
+        cout << "Nolūks: "; cin.ignore(); getline(cin, purpose);
+        cout << "Tālrunis: "; cin >> phoneNumber;
+    }
+    
     PublicBuilding(string street, int year, string name, int numbers):Building(street, year), purpose(name), phoneNumber(numbers){}
     
+    void writeData(ofstream& outputFile) const override {
+        outputFile << "Sabiedriskās ēkas informācija:" << endl;
+        outputFile << "Adrese: "<< address;
+        outputFile << "Būvniecības gads: " << yearBuilt;
+        outputFile << "Tipa veids: " << purpose;
+        outputFile << "Tālrunis: " << phoneNumber;
+    }
+
     void set_purpose(string name);
     void set_phoneNumber(int numbers);
     string get_purpose();
@@ -127,8 +164,23 @@ class AppartmentHouse : public Building {
     int floors; 
 
     public:
-    AppartmentHouse() {}
+    AppartmentHouse() {    
+    cout << "Daudzdzīvokļu mājas informācija:" << endl;
+    cout << "Adrese: "; cin.ignore(); getline(cin, address);
+    cout << "Būvniecības gads: "; cin >> yearBuilt;
+    cout << "Dzīvokļu skaits: "; cin >> apartments;
+    cout << "Stāvu skaits: "; cin >> floors;
+    }
     AppartmentHouse(string street, int year, int aparts, int flrs) : Building(street, year), apartments(aparts), floors(flrs) {}
+    
+    void writeData(ofstream& outputFile) const override {
+        outputFile << "Daudzdzīvokļu mājas informācija:" << endl;
+        outputFile << "Adrese: "<< address;
+        outputFile << "Būvniecības gads: " << yearBuilt;
+        outputFile << "Dzīvokļu skaits: " << apartments;
+        outputFile << "Stāvu skaits: " << floors;
+        }
+
 
     void set_apartments(int aparts);
     void set_floors(int flrs);
@@ -148,9 +200,9 @@ void writeToFile(const string& filename, const Building& building) {
     if (outputFile.is_open()) {
         building.writeData(outputFile);
         outputFile.close();
-        cout << "Information has been written to file " << filename << endl;
+        cout << "Informācija ierakstītā failā: " << filename << endl;
     } else {
-        cout << "Unable to open file " << filename << "!" << endl;
+        cout << "Nevarēja atvērt failu: " << filename << "!" << endl;
     }
 }
 
@@ -171,6 +223,112 @@ string line;
     }
 };
 
+
+
+void makeChoice(const string& filename) {
+    int choice;
+    
+    do {
+        cout << "Izvēlieties darbību:" << endl;
+        cout << "1. Lasīt informāciju no faila" << endl;
+        cout << "2. Ierakstīt informāciju par prīvatmāju" << endl;
+        cout << "3. Ierakstīt informāciju par viesnīcu" << endl;
+        cout << "4. Ierakstīt informāciju par publisko eku" << endl;
+        cout << "5. Ierakstīt informāciju daudzdzīvokļu māju" << endl;
+        cout << "6. Iziet no programmas" << endl;
+        cout << "Jūsu izvēle: ";
+        
+        cin >> choice;
+        cin.ignore();
+        
+        switch(choice) {
+            case 1:
+                readFromFile(filename);
+                break;
+            case 2: {
+                PrivateHouse house;
+                writeToFile(filename, house);
+                break;
+            }
+            case 3: {
+                Hotel hotel;
+                writeToFile(filename, hotel);
+                break;
+            }
+            case 4: {
+                PublicBuilding publicB;
+                writeToFile(filename, publicB);
+                break;
+            }
+            case 5: {
+                AppartmentHouse appartment;
+                writeToFile(filename, appartment);
+                break;
+            }
+            case 6:
+                cout << "Izeja no programmas..." << endl;
+                break;
+            default:
+                cout << "Nepareiza darbības izvēle!" << endl;
+                break;
+        }
+    } while (choice != 6);
+}
+
+int main()
+{
+    string filename = "building_info.txt";
+
+
+
+    
+    PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
+    writeToFile(filename, objHouse);
+
+    //Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel objHotel", 117, 3);
+    //PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
+    //AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
+    
+    //writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
+    //makeChoice(filename);
+    
+	return 0;
+}
+
+    
+
+
+    //makeChoice(filename, objHouse, objHotel, objPublic, objAppart);
+    
+    /*cout << "Prīvatmāja atrodas pēc adreses: " << objPrivateHouse.get_address() << endl;
+    cout << "Būvniecības gads: " << objPrivateHouse.get_year() << ". gads"<< endl;
+    cout << "Mājas platība: " << objPrivateHouse.get_area() << " m²" << endl;
+
+    
+    cout << endl << "Viesnīcas nosaukums: " << objHotel.get_hotelName() << endl;
+    cout << objHotel.get_hotelName() <<" atrodas pēc adreses: " << objHotel.get_address() << endl;
+    cout << "Būvniecības gads: " << objHotel.get_year() << ". gads" << endl;
+    cout << "Numuru skaits: " << objHotel.get_roomCount() << endl;
+    cout << "Zvaigžņu skaits: " << objHotel.get_stars() << endl;
+
+    
+    cout << "\nSabiedriskā ēka atrodas pēs adreses: " << objPublic.get_address() << endl;
+    cout << "Būvniecības gads: " << objPublic.get_year() << ". gads" << endl;
+    cout << "Sabiedriska ēka: " << objPublic.get_purpose() << endl;
+    cout << "Tālrunis: " << objPublic.get_phoneNumber() << endl;
+
+    
+    cout << endl << "Daudzdzīvokļu mājas adrese: " << objAppart.get_address() << endl;
+    cout << "Būvniecības gads: " << objAppart.get_year() << ". gads" << endl;
+    cout << "Dzīvokļu skaits: " << objAppart.get_apartments() << endl;
+    cout << "Stāvu skaits: " << objAppart.get_floors() << endl;*/
+
+    
+
+    //readFromFile(filename);
+    //
+    //system("Pause>>null");
+
 /*PrivateHouse funcPrivatHouse(){
     int year;
     double area;
@@ -187,7 +345,7 @@ string line;
     PrivateHouse house(adrese, year, area);
     return house;
     
-};*/
+};
 
 Hotel funcHotel() {
     string address;
@@ -238,68 +396,4 @@ AppartmentHouse funcAppartmentHouse() {
     AppartmentHouse appart(address, year, apartments, floors);
     
     return appart;
-    }
-
-void makeChoice(const string& filename) {
-    
-
-
-
-                PrivateHouse house;
-                writeToFile(filename, house);
-}
-int main()
-{
-    string filename = "building_info.txt";
-
-
-
-    //PrivateHouse house = funcPrivatHouse(); 
-    //PublicBuilding publicB = funcPublicBuilding();
-    //AppartmentHouse appart = funcAppartmentHouse();
-
-    
-    //PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
-    //Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel objHotel", 117, 3);
-    //PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
-    //AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
-    
-    //writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
-    makeChoice(filename);
-    
-	return 0;
-}
-
-    
-
-
-    //makeChoice(filename, objHouse, objHotel, objPublic, objAppart);
-    
-    /*cout << "Prīvatmāja atrodas pēc adreses: " << objPrivateHouse.get_address() << endl;
-    cout << "Būvniecības gads: " << objPrivateHouse.get_year() << ". gads"<< endl;
-    cout << "Mājas platība: " << objPrivateHouse.get_area() << " m²" << endl;
-
-    
-    cout << endl << "Viesnīcas nosaukums: " << objHotel.get_hotelName() << endl;
-    cout << objHotel.get_hotelName() <<" atrodas pēc adreses: " << objHotel.get_address() << endl;
-    cout << "Būvniecības gads: " << objHotel.get_year() << ". gads" << endl;
-    cout << "Numuru skaits: " << objHotel.get_roomCount() << endl;
-    cout << "Zvaigžņu skaits: " << objHotel.get_stars() << endl;
-
-    
-    cout << "\nSabiedriskā ēka atrodas pēs adreses: " << objPublic.get_address() << endl;
-    cout << "Būvniecības gads: " << objPublic.get_year() << ". gads" << endl;
-    cout << "Sabiedriska ēka: " << objPublic.get_purpose() << endl;
-    cout << "Tālrunis: " << objPublic.get_phoneNumber() << endl;
-
-    
-    cout << endl << "Daudzdzīvokļu mājas adrese: " << objAppart.get_address() << endl;
-    cout << "Būvniecības gads: " << objAppart.get_year() << ". gads" << endl;
-    cout << "Dzīvokļu skaits: " << objAppart.get_apartments() << endl;
-    cout << "Stāvu skaits: " << objAppart.get_floors() << endl;*/
-
-    
-
-    //readFromFile(filename);
-    //
-    //system("Pause>>null");
+    }*/
