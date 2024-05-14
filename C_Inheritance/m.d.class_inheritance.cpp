@@ -301,10 +301,10 @@ int main()
     AppartmentHouse appart = funcAppartmentHouse();
 
     
-    PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
-    Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel objHotel", 117, 3);
-    PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
-    AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
+    //PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
+    //Hotel objHotel("Ģimnāzijas iela 46, Daugavpils, LV-5401", 2005, "Hotel objHotel", 117, 3);
+    //PublicBuilding objPublic("Smilšu iela 127, Daugavpils", 1972, "Daugavpils Kultūras pils", 65437892);
+    //AppartmentHouse objAppart("Vienības iela 20, Daugavpils", 1965, 24, 3);
     
     //writeToFile(filename, objHouse, objHotel, objPublic, objAppart, 2);
     makeChoice(filename, house, hotel, publicB, appart);

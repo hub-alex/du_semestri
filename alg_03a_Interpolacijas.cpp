@@ -27,7 +27,7 @@ void interpolation(int mas[], int n, int x){
     int laba = n - 1;
 
     while (kreisa <= laba && x >= mas[kreisa] && x <= mas[laba]) {
-        // Интерполяция для предполагаемой позиции
+
         int pos = kreisa + (((double)(laba - kreisa) / (mas[laba] - mas[kreisa])) * (x - mas[kreisa]));
 
         if (mas[pos] == x) {

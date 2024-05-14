@@ -4,7 +4,6 @@
 #include <cstring>
 #include <string>
 #include <ctime>
-//#define N 100
 
 using namespace std;
 
@@ -187,7 +186,7 @@ int AppartmentHouse::get_floors() { return floors; }
 
 void writeToFile(const string& filename, const Building& building) {
     ofstream outputFile;
-    outputFile.open(filename, ios_base::app);
+    outputFile.open(filename, ios::app);
     if (outputFile.is_open()) {
         building.writeData(outputFile);
         outputFile.close();
@@ -271,6 +270,7 @@ void makeChoice(const string& filename) {
     } while (choice != 6);
 }
 
+
 void automat(const string& filename){
     PrivateHouse objHouse("Puškina iela 238, Daugavpils", 2005, 136.4);
     writeToFile(filename, objHouse);
@@ -285,114 +285,16 @@ void automat(const string& filename){
     writeToFile(filename, objAppart);
     }
 
+
 int main()
 {
     string filename = "building_info.txt";
     makeChoice(filename);
-    //automat(filename);
-
+    
+    
+    
+    //automat(filename); //ja vajag bez menu, bet ar kostruktoru
+    
+    system("Pause>>null");
 	return 0;
 }
-
-    
-
-
-    //makeChoice(filename, objHouse, objHotel, objPublic, objAppart);
-    
-    /*cout << "Prīvatmāja atrodas pēc adreses: " << objPrivateHouse.get_address() << endl;
-    cout << "Būvniecības gads: " << objPrivateHouse.get_year() << ". gads"<< endl;
-    cout << "Mājas platība: " << objPrivateHouse.get_area() << " m²" << endl;
-
-    
-    cout << endl << "Viesnīcas nosaukums: " << objHotel.get_hotelName() << endl;
-    cout << objHotel.get_hotelName() <<" atrodas pēc adreses: " << objHotel.get_address() << endl;
-    cout << "Būvniecības gads: " << objHotel.get_year() << ". gads" << endl;
-    cout << "Numuru skaits: " << objHotel.get_roomCount() << endl;
-    cout << "Zvaigžņu skaits: " << objHotel.get_stars() << endl;
-
-    
-    cout << "\nSabiedriskā ēka atrodas pēs adreses: " << objPublic.get_address() << endl;
-    cout << "Būvniecības gads: " << objPublic.get_year() << ". gads" << endl;
-    cout << "Sabiedriska ēka: " << objPublic.get_purpose() << endl;
-    cout << "Tālrunis: " << objPublic.get_phoneNumber() << endl;
-
-    
-    cout << endl << "Daudzdzīvokļu mājas adrese: " << objAppart.get_address() << endl;
-    cout << "Būvniecības gads: " << objAppart.get_year() << ". gads" << endl;
-    cout << "Dzīvokļu skaits: " << objAppart.get_apartments() << endl;
-    cout << "Stāvu skaits: " << objAppart.get_floors() << endl;*/
-
-    
-
-    //readFromFile(filename);
-    //
-    //system("Pause>>null");
-
-/*PrivateHouse funcPrivatHouse(){
-    int year;
-    double area;
-    string adrese;
-    //PrivateHouse house("Puškina iela 238, Daugavpils", 2005, 136.4);
-    cout << "Prīvatmāja informācija:" << endl;
-    cout << "Adrese: ";  
-    cin.ignore(); 
-    getline(cin, adrese);
-    cout << "Būvniecības gads: "; cin.ignore(); cin >> year;
-    cout << "Mājas platība: "; cin >> area;
-    
-    cin.ignore();
-    PrivateHouse house(adrese, year, area);
-    return house;
-    
-};
-
-Hotel funcHotel() {
-    string address;
-    int year, roomCount, stars;
-    string hotelName;
-
-    cout << "Viesnīcas informācija:" << endl;
-    cout << "Nosaukums: "; cin.ignore(); getline(cin, hotelName);
-    cout << "Adrese: "; getline(cin, address);
-    cout << "Būvniecības gads: "; cin >> year;
-    cout << "Numuru skaits: "; cin >> roomCount;
-    cout << "Zvaigžņu skaits: "; cin >> stars;
-    
-    cin.ignore();
-    Hotel hotel(address, year, hotelName, roomCount, stars);
-    
-    return hotel;
-}
-
-PublicBuilding funcPublicBuilding() {
-    string address;
-    int year, phoneNumber;
-    string purpose;
-
-    cout << "Sabiedriskās ēkas informācija:" << endl;
-    cout << "Adrese: "; cin.ignore(); getline(cin, address);
-    cout << "Būvniecības gads: "; cin >> year;
-    cout << "Nolūks: "; cin.ignore(); getline(cin, purpose);
-    cout << "Tālrunis: "; cin >> phoneNumber;
-    
-    cin.ignore();
-    PublicBuilding publicB(address, year, purpose, phoneNumber);
-
-    return publicB;
-}
-
-AppartmentHouse funcAppartmentHouse() {
-    string address;
-    int year, apartments, floors;
-
-    cout << "Daudzdzīvokļu mājas informācija:" << endl;
-    cout << "Adrese: "; cin.ignore(); getline(cin, address);
-    cout << "Būvniecības gads: "; cin >> year;
-    cout << "Dzīvokļu skaits: "; cin >> apartments;
-    cout << "Stāvu skaits: "; cin >> floors;
-    
-    cin.ignore();
-    AppartmentHouse appart(address, year, apartments, floors);
-    
-    return appart;
-    }*/
