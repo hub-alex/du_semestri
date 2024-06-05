@@ -26,21 +26,19 @@ void interpolation(int mas[], int n, int x){
     int kreisa = 0;
     int laba = n - 1;
 
-    while (kreisa <= laba && x >= mas[kreisa] && x <= mas[laba]) {
-
-        int pos = kreisa + (((double)(laba - kreisa) / (mas[laba] - mas[kreisa])) * (x - mas[kreisa]));
-
-        if (mas[pos] == x) {
-            cout << endl << "Atrada pēc indeksa: " << pos;
-            return;
-        }
-
+    int pos = kreisa + (((double)(laba - kreisa) / (mas[laba] - mas[kreisa])) * (x - mas[kreisa]));
+    while (kreisa <= laba && mas[pos]!=x) {
+  
         if (mas[pos] < x)
             kreisa = pos + 1;
         else
             laba = pos - 1;
+            pos = kreisa + (((double)(laba - kreisa) / (mas[laba] - mas[kreisa])) * (x - mas[kreisa]));
     }
-    cout << endl << "Neatrada!";
+        if (mas[pos] == x) {
+            cout << endl << "Atrada pēc indeksa: " << pos;
+        }
+        else cout << endl << "Neatrada!";
 }
 
 int main(){
