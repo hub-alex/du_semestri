@@ -32,6 +32,7 @@ int main (){
     head = CreateNode();
     newNode = CreateNode();
     tresais = CreateNode();
+    nultais = CreateNode();
     head->link = newNode; //1 ar 2
     newNode->link = tresais;//2 ar 3
     nultais->link = head;
