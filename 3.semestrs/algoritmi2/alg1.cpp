@@ -1,13 +1,15 @@
 #include<iostream>
 #include<cstdlib>
-using namespace std;
+using namespace std; 
+// lin. saraksts
 
 struct Node {
     int data;
     Node *link;
 };
 
-Node *CreateNode (){
+
+Node* CreateNode (){
     Node *newNode;
     newNode = new Node;
     cout<<"\nIevadiet skaitļi, kuru pievienot: "; 
@@ -16,35 +18,69 @@ Node *CreateNode (){
     return newNode;
 }
 
+
 void PrintList (Node *head){
-    Node *cur;
-    cout<<"Saraksta elementi: \n";
-    cur=head;
-    while (cur!=NULL)
-        {
-            cout<<cur->data<<" ";
-            cur = cur->link;
-        }
+    Node *cur = head;
+    cout << "\nSaraksta elementi: "; 
+    while (cur != NULL) {
+        cout << cur->data << ", ";
+        cur = cur->link;
+    }
 }
 
-int main (){
-    Node *head, *newNode, *tresais, *nultais;
-    head = CreateNode();
-    newNode = CreateNode();
-    tresais = CreateNode();
-    nultais = CreateNode();
-    head->link = newNode; //1 ar 2
-    newNode->link = tresais;//2 ar 3
-    nultais->link = head;
-    PrintList(nultais);
 
+void AddFirst(Node *&head) {
+    Node *create = CreateNode();
+    create->link = head;
+    head = create;
+}
 
-/*
-    cout<<"\nhead data="<<head->data;
-    cout<<"\nhead link="<<head->link;
-    cout<<"\nsizeof_link = "<<sizeof(head->link);
-    cout<<"\nsizeof_data = "<<sizeof(head->data);
-    */
-    //systems("pause>null");
+int main() {
+    Node *head = NULL;
+    int darbiba;
+
+    do {
+        system("clear");
+        cout << "\nLineārais saraksts\n";
+        cout << "1. Izveidot head\n";
+        cout << "2. Izvadīt head vērtību\n";
+        cout << "3. Pievienot sākumā\n";
+        cout << "0. Izvadīt sarakstu\n";
+        cout << "99. Pabeigt programmu\n";
+        cout << "Ievadiet darbību\n";
+        cin >> darbiba;
+
+        switch (darbiba) {
+        case 1:
+            if (!head) 
+                head = CreateNode();
+            else 
+                cout << "Head jau eksistē!\n";
+            cin.get();
+            break;
+        case 2:
+            if (head)
+                cout << "\nHead vērtība: " << head->data << "\n";
+            else
+                cout << "\nIzveidojiet Head!\n";
+            cin.get(); 
+            break;
+        case 3:
+            AddFirst(head);
+            break;
+        case 0:
+            PrintList(head);
+            cin.get();
+            break;
+        case 99:
+            cout << "Programmas beigas!\n";
+            break;
+        default:
+            cout << "Nepareizs ievads!\n";
+            break;
+        }
+        cin.get();
+    } while (darbiba != 99);
+
     return 0;
 }
