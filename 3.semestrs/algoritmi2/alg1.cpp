@@ -35,6 +35,25 @@ void AddFirst(Node *&head) {
     head = create;
 }
 
+//=====================
+
+Node *DeleteFirst(Node *&head) {
+    Node *cur;
+    if (head) {
+        cur = head->link;
+        delete head;
+        cout<<"\nMezgls ir izdzests.\n Nakamais kļūva par head";
+        cin.get();
+        return cur;
+    }
+    else {
+        cout<<"\n Vel nav head mezgla";
+        cin.get();
+        return NULL;
+        }
+    }
+    
+//===================
 
 Node* AddLast(Node *&head) {
     Node *ped, *cur;
@@ -113,8 +132,34 @@ Node *AddBefore(Node *&head) {
 return head;
 }
 
+//======== DeleteLast ===========
 
-//===============
+Node *DeleteLast(Node *&head) {
+    Node *cur, *prev;
+    cur = head;
+    if (!head) {
+        cout<<"\nNav head";
+        cin.get();
+        return NULL;
+    }
+    //ja viens mezgls
+    if (head->link==NULL) { 
+        head = DeleteFirst(head);
+        return head;
+    } 
+        //ja daudz mezglu
+        while(cur->link!=NULL){
+            prev = cur;
+            cur = cur->link;
+        }
+        prev->link=NULL;
+        delete cur;
+        cout<<"\nMezgls ir izdzests";
+        cin.get();
+        return head;
+}
+
+//======= main ========
 
 
 int main() {
@@ -129,7 +174,10 @@ int main() {
         cout << "2. Izvadīt head vērtību\n";
         cout << "3. Pievienot sākumā\n";
         cout << "4. Pievienot beigas\n";
-        cout << "5. Pievienot pēc AddAfter\n";
+        cout << "5. Pievienot pēc (AddAfter)\n";
+        cout << "6. Pievienot pirms (AddBefore)\n";
+        cout << "7. Dzest pirmo Nodu\n";
+        cout << "8. Dzest pedejo Nodu\n";
         cout << "9. Sameklēt mezglu\n";
         cout << "0. Izvadīt sarakstu\n";
         cout << "99. Pabeigt programmu\n";
@@ -161,6 +209,16 @@ int main() {
         case 5:
             AddAfter(head);
             cin.get();
+            break;
+        case 6:
+            head = AddBefore(head);
+            cin.get();
+            break;
+        case 7:
+            head = DeleteFirst(head);
+            break;
+        case 8:
+            head = DeleteLast(head);
             break;
         case 9:
             cout<<"Kuru mezglu meklēt?"; cin>>x;
