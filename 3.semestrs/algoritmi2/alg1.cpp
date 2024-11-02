@@ -8,6 +8,7 @@ struct Node {
     Node *link;
 };
 
+//========= CreateNode ============
 
 Node* CreateNode (){
     Node *newNode;
@@ -18,6 +19,7 @@ Node* CreateNode (){
     return newNode;
 }
 
+//========= PrintList ============
 
 void PrintList (Node *head){
     Node *cur = head;
@@ -28,6 +30,7 @@ void PrintList (Node *head){
     }
 }
 
+//========= AddFirst ============
 
 void AddFirst(Node *&head) {
     Node *create = CreateNode();
@@ -35,7 +38,7 @@ void AddFirst(Node *&head) {
     head = create;
 }
 
-//=====================
+//========= DeleteFirst ============
 
 Node *DeleteFirst(Node *&head) {
     Node *cur;
@@ -53,7 +56,7 @@ Node *DeleteFirst(Node *&head) {
         }
     }
     
-//===================
+//========= AddLast ==========
 
 Node* AddLast(Node *&head) {
     Node *ped, *cur;
@@ -67,7 +70,8 @@ Node* AddLast(Node *&head) {
     }
 return head;
 }
-//===============
+
+//======= FindNode ========
 
 Node *FindNode(Node *head, int x){
 Node *cur;
@@ -76,22 +80,22 @@ while(cur && cur->data!=x) cur = cur-> link;
 return cur;
 }
 
-//===============
+//======= FindNode2 ========
 
 Node *FindNode2(Node *head, int x){
 Node *cur, *prev;
 cur = head;
-while(cur && cur->data!=x) 
+while(cur && cur->data!=x) {
     prev = cur;
     cur = cur-> link;
+    }
 
 return prev;
 }
 
-//===============
+//======= AddAfter ========
 
-
-void *AddAfter(Node *&head) {
+void AddAfter(Node *&head) {
     Node *newNode, *cur;
     int x;
     cout<<"\nPēc kura pievienot:"; cin>>x;
@@ -109,27 +113,37 @@ void *AddAfter(Node *&head) {
         }
     }
 
-//===============
+//======= AddBefore ========
 
 Node *AddBefore(Node *&head) {
     Node *newNode, *cur, *prev;
     int x;
+    cout<<"\nPirms kura skaitļa pievienot: "; 
+    cin>>x;
+    
+    if (!head) {
+        cout<<"\nSaraksts tukšs!";
+        cin.get();
+        return head;
+    }
+    
     cur = FindNode(head, x);
-    cur = head;
     if (!cur) {
         cout<<"\n Tada skaitļa nav!";
         cin.get();
-        }
+        return head;
+    }
     
-    else{
-        newNode = CreateNode();
-        //jauna f-ja
-        prev = FindNode2(head, x);
+    newNode = CreateNode();
+    prev = FindNode2(head, x);
+    if (cur == head) {
+        newNode->link = head;
+        head = newNode;
+    } else {
         newNode->link = prev->link;
         prev->link = newNode;
-        }
-
-return head;
+    }
+    return head;
 }
 
 //======== DeleteLast ===========
@@ -159,8 +173,74 @@ Node *DeleteLast(Node *&head) {
         return head;
 }
 
-//======= main ========
+//======== DeleteAfter ===========
 
+void DeleteAfter (Node *head) {
+    int x;
+    Node *y, *cur;
+    cout<<"\nPec kura skaitla dzest: "; cin>>x; 
+    y = FindNode(head,x);
+    if(y){
+        if(y->link!=NULL) 
+        {
+            cur=y->link;
+            y->link=cur->link;
+            delete cur;
+            cout<<"\nIzdzests.";                
+            }
+        else {
+            cout<<"\nNav ko dzest!";
+            cin.get();
+        }
+        }
+    else cout<<"\nNav tada skaitla";
+        cin.get();
+}
+
+//----------- DeleteBefore --------------
+Node *DeleteBefore(Node *head) {
+    if (!head || !head->link) {
+        cout<<"\nSaraksts ir tukšs vai satur tikai vienu elementu!";
+        cin.get();
+        return head;
+    }
+    
+    int x;
+    Node *y, *cur, *prev;
+    cout<<"\nPirms kura skaitļa dzest: "; 
+    cin>>x;
+    
+    y = FindNode(head, x);
+    if (!y) {
+        cout<<"\nTāda skaitļa nav!";
+        cin.get();
+        return head;
+    }
+    
+    if (y == head) {
+        cout<<"\nPirms pirmā elementa nevar dzēst!";
+        cin.get();
+        return head;
+    }
+    
+    cur = FindNode2(head, x);
+    if (cur == head) {
+        head = y;
+        delete cur;
+    } else {
+        prev = FindNode2(head, cur->data);
+        prev->link = y;
+        delete cur;
+    }
+    
+    cout<<"\nIzdzests.";
+    cin.get();
+    return head;
+}
+
+
+
+//======= main ========
 
 int main() {
     Node *head = NULL, *newNode, *cur;
@@ -176,12 +256,15 @@ int main() {
         cout << "4. Pievienot beigas\n";
         cout << "5. Pievienot pēc (AddAfter)\n";
         cout << "6. Pievienot pirms (AddBefore)\n";
-        cout << "7. Dzest pirmo Nodu\n";
-        cout << "8. Dzest pedejo Nodu\n";
-        cout << "9. Sameklēt mezglu\n";
+        cout << "7. Delete first node\n";
+        cout << "8. Delete last node Nodu\n";
+        cout << "9. Delete after node\n";    
+        cout << "10. Delete before node\n";
+        cout << "11. Sameklēt mezglu\n";
         cout << "0. Izvadīt sarakstu\n";
         cout << "99. Pabeigt programmu\n";
         cout << "Ievadiet darbību\n";
+
         cin >> darbiba;
 
         switch (darbiba) {
@@ -212,7 +295,7 @@ int main() {
             break;
         case 6:
             head = AddBefore(head);
-            cin.get();
+            // cin.get();
             break;
         case 7:
             head = DeleteFirst(head);
@@ -220,7 +303,18 @@ int main() {
         case 8:
             head = DeleteLast(head);
             break;
-        case 9:
+        case 9: 
+            if(head) DeleteAfter(head); 
+            else cout<<"\nSaraksts tukšs"; 
+            break;
+        case 10:
+            if(head && head->link) 
+                head = DeleteBefore(head); 
+            else 
+                cout<<"\nSaraksts tukšs vai satur tikai vienu elementu"; 
+            break;
+
+        case 11:
             cout<<"Kuru mezglu meklēt?"; cin>>x;
             cur = FindNode(head, x);
             if (!cur) {
