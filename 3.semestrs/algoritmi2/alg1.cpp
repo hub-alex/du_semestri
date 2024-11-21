@@ -315,7 +315,7 @@ int main() {
             break;
 
         case 11:
-            cout<<"Kuru mezglu meklēt?"; cin>>x;
+            cout<<"Kuru mezglu meklēt?\n"; cin>>x;
             cur = FindNode(head, x);
             if (!cur) {
                 cout<<"\nNeatrada!";
