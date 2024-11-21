@@ -19,17 +19,44 @@ Node* CreateNode (){
     return newNode;
 }
 
-/========= PrintList ============
+// //========= PrintTree============
 
-void PrintList (Node *head){
-    Node *cur = head;
-    cout << "\nSaraksta elementi: "; 
-    while (cur != NULL) {
-        cout << cur->data << ", ";
-        cur = cur->link;
+void PrintTree (Node *cur){
+   //LVR
+   if (!cur) return;
+   PrintTree (cur->left);
+   cout<<cur->data;
+   PrintTree(cur->right);
     }
+
+
+//========= AddNode ============
+
+Node* Addnode(Node *root) {
+    Node *newNode, *cur;
+    if (!root) root=CreateNode();
+
+    else {//ja bija sakne
+    newNode = CreateNode();
+    cur=root;
+    while(newNode->data<=cur->data && cur->left!=NULL && newNode->data>=cur->data && cur->right!=NULL){//palabot
+        while(newNode->data<=cur->data && cur->left!=NULL)
+        {
+            cur=cur->left;
+        }
+
+        while(newNode->data>=cur->data && cur->right!=NULL)
+        {
+        cur=cur->right;
+        }}
+        
+        if(newNode->data<=cur->data) cur->left=newNode;
+        else cur->right=newNode;
 }
 
+
+    return root;
+    }
 
 int main() {
     Node *root = NULL;
@@ -60,9 +87,9 @@ int main() {
                 cout << "\nIzveidojiet Root!\n";
             cin.get(); 
             break;
-        // case 3:
-        //     AddFirst(root);
-        //     break;  
+        case 3:
+            root = Addnode(root);
+            break;
         // case 0:
         //     PrintList(root);
         //     cin.get();
