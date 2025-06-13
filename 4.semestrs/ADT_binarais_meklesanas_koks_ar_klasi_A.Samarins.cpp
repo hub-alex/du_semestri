@@ -8,7 +8,6 @@ struct Node
     Node* left, * right;
 };
 
-
 class Tree {
     private:
         Node* root;
@@ -18,264 +17,241 @@ class Tree {
             root = NULL;
         }
     
-        Node* CreateNode()
-            {
-                if (!root) {
-                Node* newNode = new Node;
-                cout << "\nIevadiet skaitli, kuru pievienot:  ";
-                cin >> newNode->data;
-                newNode->left = NULL;
-                newNode->right = NULL;
-                return newNode;
-                }
-                else {
-                    system("clear");
-                    cout << "\nSakne jau eksiste";
+        Node* CreateNode() {
+            Node* newNode = new Node;
+            cout << "\nIevadiet skaitli, kuru pievienot: ";
+            cin >> newNode->data;
+            newNode->left = NULL;
+            newNode->right = NULL;
+            return newNode;
         }
-            }
 
-        //------------------------------
-        void PrintTree(Node* cur)
-            {
-                if (!cur) return;
-                PrintTree(cur->left);
-                cout << cur->data << " ";
-                PrintTree(cur->right);
-                PrintTree(root);
-            }
-
-
-        //--------------------------------
-        Node* AddNode(Node* root)
-        {
-            Node* newNode, * cur;
-            if (!root) root = CreateNode();
-            else {
-                newNode = CreateNode();
-                cur = root;
-                while ((newNode->data <= cur->data && cur->left != NULL) or (newNode->data > cur->data && cur->right != NULL)) {
-                    while (newNode->data <= cur->data && cur->left != NULL) {
+        void AddNode() {
+            Node* newNode = CreateNode();
+            if (!root) {
+                root = newNode;
+            } else {
+                Node* cur = root;
+                while (true) {
+                    if (newNode->data <= cur->data) {
+                        if (!cur->left) {
+                            cur->left = newNode;
+                            break;
+                        }
                         cur = cur->left;
-                    }
-                    while (newNode->data > cur->data && cur->right != NULL) {
+                    } else {
+                        if (!cur->right) {
+                            cur->right = newNode;
+                            break;
+                        }
                         cur = cur->right;
                     }
                 }
-                if (newNode->data <= cur->data) cur->left = newNode;
-                else cur->right = newNode;
             }
-
-            return root;
         }
-        //---------------------------
 
-        void FindNode(Node* root)
-        {
-            Node* cur;
+        void FindNode() {
+            if (!root) {
+                cout << "\nKoks ir tukss!";
+                return;
+            }
+            
             int x;
-            cout << "Kuru skaitli meklesim?: "; cin >> x;
-            cur = root;
-            while (cur && cur->data != x && cur->left != NULL && cur->right != NULL) {
-                if (cur->data > x && cur->left != NULL) {
-                    cur = cur->left;
+            cout << "\nKuru skaitli meklesim?: ";
+            cin >> x;
+            
+            Node* cur = root;
+            while (cur) {
+                if (cur->data == x) {
+                    cout << "\nRezultats: atrada";
+                    return;
                 }
-                else if (cur->data < x && cur->right != NULL) {
+                if (x < cur->data) {
+                    cur = cur->left;
+                } else {
                     cur = cur->right;
                 }
             }
-            if (cur->data == x) cout << "Rezultāts: atrada";
-            else if (!cur || cur->data!=x) cout << "Rezultāts: neatrada";
+            cout << "\nRezultats: neatrada";
         }
-            
-        //---------------------------
 
-        Node* DeleteNode(Node* root, int x) {
-            if (!root) return root; 
+        Node* DeleteNodeHelper(Node* node, int x) {
+            if (!node) return node;
 
-            if (x < root->data) {
-                root->left = DeleteNode(root->left, x);
+            if (x < node->data) {
+                node->left = DeleteNodeHelper(node->left, x);
             }
-            else if (x > root->data) {
-                root->right = DeleteNode(root->right, x);
+            else if (x > node->data) {
+                node->right = DeleteNodeHelper(node->right, x);
             }
             else {
-                if (!root->left && !root->right) {
-                    delete root;
+                if (!node->left && !node->right) {
+                    delete node;
                     return NULL;
                 }
-                else if (!root->left) {
-                    Node* cur = root->right;
-                    delete root;
+                else if (!node->left) {
+                    Node* cur = node->right;
+                    delete node;
                     return cur;
                 }
-                else if (!root->right) {
-                    Node* cur = root->left;
-                    delete root;
+                else if (!node->right) {
+                    Node* cur = node->left;
+                    delete node;
                     return cur;
                 }
                 else {
-                    Node* cur = root->right;
+                    Node* cur = node->right;
                     while (cur->left) cur = cur->left;
-                    root->data = cur->data; 
-                    root->right = DeleteNode(root->right, cur->data); 
+                    node->data = cur->data;
+                    node->right = DeleteNodeHelper(node->right, cur->data);
                 }
             }
-            return root;
+            return node;
         }
 
-        //----------------------------
-        void PrintTree1(Node* node, int depth = 0) {
-            if (node == NULL) return;
+        void DeleteNode() {
+            if (!root) {
+                cout << "\nKoks ir tukšs!";
+                return;
+            }
+            
+            int x;
+            cout << "\nKuru skaitli dzēst?: ";
+            cin >> x;
+            root = DeleteNodeHelper(root, x);
+            cout << "\nSkaitlis " << x << " dzēsts!";
+        }
 
-            PrintTree1(node->right, depth + 1);
+        void PrintTreeHelper(Node* node, int depth) {
+            if (!node) return;
+
+            PrintTreeHelper(node->right, depth + 1);
 
             for (int i = 0; i < depth * 4; ++i) cout << " ";
             cout << node->data << endl;
 
-            PrintTree1(node->left, depth + 1);
+            PrintTreeHelper(node->left, depth + 1);
         }
 
-        //-----------------------------
-        void Preorder(Node* root) {
-            if (root == NULL) return;
-
-            cout << root->data << " ";
-            Preorder(root->left);
-            Preorder(root->right);
+        void PrintTree() {
+            if (!root) {
+                cout << "\nKoks ir tukšs!";
+                return;
+            }
+            cout << "\nKoka struktura:\n";
+            PrintTreeHelper(root, 0);
         }
 
-        //-----------------------------
-        void Postorder(Node* root) {
-            if (root == NULL) return;
-
-            Postorder(root->left);
-            Postorder(root->right);
-            cout << root->data << " ";
+        void PreorderHelper(Node* node) {
+            if (!node) return;
+            cout << node->data << " ";
+            PreorderHelper(node->left);
+            PreorderHelper(node->right);
         }
 
-        //-----------------------------
-        int CountNodes(Node* root)
-        {
-            if (root == NULL) return 0; 
-            else  return 1 + CountNodes(root->left) + CountNodes(root->right);  
+        void Preorder() {
+            if (!root) {
+                cout << "\nKoks ir tukšs!";
+                return;
+            }
+            cout << "\nPreorder (tieša secība): ";
+            PreorderHelper(root);
         }
 
-        };
+        void PostorderHelper(Node* node) {
+            if (!node) return;
+            PostorderHelper(node->left);
+            PostorderHelper(node->right);
+            cout << node->data << " ";
+        }
 
+        void Postorder() {
+            if (!root) {
+                cout << "\nKoks ir tukšs!";
+                return;
+            }
+            cout << "\nPostorder (preteja secība): ";
+            PostorderHelper(root);
+        }
+
+        void InorderHelper(Node* node) {
+            if (!node) return;
+            InorderHelper(node->left);
+            cout << node->data << " ";
+            InorderHelper(node->right);
+        }
+
+        void PrintInorder() {
+            if (!root) {
+                cout << "\nKoks ir tukšs!";
+                return;
+            }
+            cout << "\nKoks (inorder): ";
+            InorderHelper(root);
+        }
+
+        int CountNodesHelper(Node* node) {
+            if (!node) return 0;
+            return 1 + CountNodesHelper(node->left) + CountNodesHelper(node->right);
+        }
+
+        void CountNodes() {
+            int count = CountNodesHelper(root);
+            cout << "\nKoka elementu skaits: " << count;
+        }
+
+        void DeleteAll() {
+            DeleteAllHelper(root);
+            root = NULL;
+            cout << "\nKoks ir izdzests!";
+        }
+
+    private:
+        void DeleteAllHelper(Node* node) {
+            if (!node) return;
+            DeleteAllHelper(node->left);
+            DeleteAllHelper(node->right);
+            delete node;
+        }
+};
 
 int main() {
     Tree koks;
     int darbiba;
     do {
-        cout << "\n\nBinaras meklesanas koks";
-        cout << "\n1. Izveidot sakni";
-        cout << "\n2. Izvadit sakni";
-        cout << "\n3. Pievienot skaitli";
-        cout << "\n4. Meklet skaitli";
-        cout << "\n5. Dzest skaitli";
-        cout << "\n6. Grafiska koka izvade";
-        cout << "\n7. Preorder (tiesais) izvads";
-        cout << "\n8. Postorder (pretejais) izvads";
-        cout << "\n9. Elementu skaits";
-        cout << "\n10. Izvadit koku";
-        cout << "\n100. Par lietotni";
-        cout << "\n0. Pabeigt lietotni\n\n";
+        cout << "\nADT binaras meklesanas koks ar klasi\n";
+        cout << "1. Pievienot skaitli (AddNode)\n";
+        cout << "2. Meklet skaitli (FindNode)\n";
+        cout << "3. Dzest skaitli (DeleteNode)\n";
+        cout << "4. Grafiska koka izvade (PrintTree)\n";
+        cout << "5. Preorder (tiesais) izvads\n";
+        cout << "6. Postorder (pretejais) izvads\n";
+        cout << "7. Elementu skaits (CountNodes)\n";
+        cout << "8. Izvadit koku (PrintInorder)\n";
+        cout << "9. Dzest visu koku (DeleteAll)\n";
+        cout << "100. Par lietotni\n";
+        cout << "0. Iziet\n";
+        cout << "Izveleties darbibu: ";
         cin >> darbiba;
+
         switch (darbiba) {
-        case 1: if (!root) {
-            system("clear");
-            root = koks.CreateNode();
-        }
-            else {
-                system("clear");
-                cout << "\nSakne jau eksiste";
-                //system("pause>nul");
-        }
-              break;
-        case 2: if (root){
-            system("clear");
-            cout << "\nSaknes vertiba: " << root->data;
-            }
-              else cout << "\nIzveidojiet sakni";
-            //system("pause>nul");
-            break;
-        
-            case 3:  root = koks.AddNode(root);
-            break;
-        
-            case 4: if (root){
-            system("clear");
-            
-            koks.FindNode(root);
-            }
-              else cout << "\nIzveidojiet sakni";
-            //system("pause>nul");
-            break;
-        case 5:
-            if (root) {
-                system("clear");
-                int x;
-                cout << "Kuru skaitli dzest? ";
-                cin >> x;
-                root = koks.DeleteNode(root, x);
-            }
-            else {
-                cout << "Koks ir tukss!";
-            }
-            //system("pause>nul");
-            break;
-        case 6:
-            if (root == NULL){
-                
-                cout << "\nKoks ir tukšs!";
-            }
-            else {
-                
-                cout << "\nKoka struktura:\n";
-                koks.PrintTree1(root); 
-            }
-            //system("pause>nul");
-            break;
-        case 7:
-            system("clear");
-            cout << "Preorder (tiesa seciba)\n\n ";
-            koks.Preorder(root);
-            system("pause>nul");
-            break;
-        case 8:
-            system("clear");
-            cout << "Postorder (preteja seciba)\n\n ";
-            koks.Postorder(root);
-            //system("pause>nul");
-            break;
-        case 9:
-            if (root) {
-                system("clear");
-                cout << "\nKoka elementu skaits: " << koks.CountNodes(root);
-            }
-            else {
-                cout << "\nKoks ir tukss!";
-            }
-            //system("pause>nul");
-            break;
-        case 10: if (root) {
-            system("clear");
-            koks.PrintTree(root);
-        }
-               else cout << "\nIzveidojiet sakni";
-            //system("pause>nul");
-            break;
+        case 1: system("clear"); koks.AddNode(); break;
+        case 2: system("clear"); koks.FindNode(); break;
+        case 3: system("clear"); koks.DeleteNode(); break;
+        case 4: system("clear"); koks.PrintTree(); break;
+        case 5: system("clear"); koks.Preorder(); break;
+        case 6: system("clear"); koks.Postorder(); break;
+        case 7: system("clear"); koks.CountNodes(); break;
+        case 8: system("clear"); koks.PrintInorder(); break;
+        case 9: system("clear"); koks.DeleteAll(); break;
         case 100: 
             system("clear");
-            cout << "Binary Search Tree, lietotni izveidoja Aleksandrs Samarins, 2. kurss, DU";
-            //system("pause>nul");
+            cout << "Binary Search Tree, lietotni izveidoja Aleksandrs Samarins, 2. kurss, DU\n";
             break;
-        case 0: cout << "Lietotnes beigas"; break;
+        case 0: cout << "Lietotne pabeigta."; break;
+        default: cout << "Nepareiza izvele!";
         }
     } while (darbiba != 0);
-
-
-    system("pause>nul");
 
     return 0;
 }

@@ -149,7 +149,6 @@ int main() {
     Node* root = NULL;
     int darbiba;
     do {
-        
         cout << "\n\nBinaras meklesanas koks";
         cout << "\n1. Izveidot sakni";
         cout << "\n2. Izvadit sakni";
